@@ -7,14 +7,18 @@
     4-断言测试结果
 '''
 from selenium.webdriver.common.by import By
-from common.Driver import Driver
+from common.driver import Driver
 from common.readData import ReadData
 import unittest,time
 from ddt import ddt,unpack,data
+from common.readExcel import ReadExcel
 
-rd = ReadData()
-test_data = rd.readData()
-data_list = [{'className': 'LittleMessageTest', 'methodName': 'testLittleMessagNormal', 'testdata': 1234.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1235.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1236.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1237.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1238.0}]
+# rd = ReadData()
+# test_data = rd.readData()
+# data_list = [{'className': 'LittleMessageTest', 'methodName': 'testLittleMessagNormal', 'testdata': 1234.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1235.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1236.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1237.0}, {'className': 'LittleMessageTest', 'methodName': 'test_small_message_normal', 'testdata': 1238.0}]
+
+#实例化为全局变量，方便使用
+re = ReadExcel()
 
 class LittleMessageTest(unittest.TestCase):
 
@@ -27,11 +31,12 @@ class LittleMessageTest(unittest.TestCase):
     def testLittleMessagNormal(self):
         case_className = self.__class__.__name__
         case_methodName = self._testMethodName
-        for i in range(len(test_data)):
-            if test_data[i]['className'] == case_className and test_data[i]['methodName'] == case_methodName:
-                testdata = test_data[i]['testdata']
-        else:
-            print('无符合条件的用例')
+        # for data in test_data:
+        #     if data['className'] == case_className and data['methodName'] == case_methodName:
+        #         testdata = data['testdata']
+        # else:
+        #     print('无符合条件的用例')
+        testdata = re.getTestData(case_className,case_methodName)
         try:
             self.driver.find_element(By.ID,'com.ss.android.article.news:id/bov').click()
             time.sleep(2)
