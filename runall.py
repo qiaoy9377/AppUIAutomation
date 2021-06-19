@@ -33,12 +33,20 @@ cur_path = os.path.dirname(__file__)
 now_time = time.strftime('%Y-%m-%d_%H-%M-%S',time.localtime())
 
 def creatSuite():
+    '''
+    使用testloader模块生成测试套件
+    :return: 生成的测试套件
+    '''
     # 1-获取用例文件路径，加载测试套件
     case_path = cur_path + '/testCase/'
     suite = unittest.defaultTestLoader.discover(start_dir=case_path, pattern='*test.py', top_level_dir=None)
     return suite
 
 def autoClearReport():
+    '''
+    自动清理旧报告文件
+    :return:
+    '''
     #方案一
     # report_list = os.listdir(cur_path+'/testReport')
     # for report in report_list:

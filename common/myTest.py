@@ -5,7 +5,7 @@
     2-继承unittest。testcase
     3-封装setupclass类方法
 '''
-import unittest
+import unittest,time
 from common.driver import Driver
 from common.logs import logger
 
@@ -25,6 +25,7 @@ class MyTest(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
+        time.sleep(3)
         cls.driver.quit()
         logger.debug('退出')
 
